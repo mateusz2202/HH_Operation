@@ -95,12 +95,12 @@ public partial class OperationDbContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //{
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
 
-    //    string connectionString = "Server=localhost;Database=SS_OperationDB;User ID=sa;Password=Xd1234!2;TrustServerCertificate=True;Trusted_Connection=False;";
-    //    optionsBuilder.UseSqlServer(connectionString);
+        string connectionString = "Server=DESKTOP-RQDKA5R\\HERMES;Database=SS_OperationDB;User ID=sa;Password=997997;TrustServerCertificate=True;Trusted_Connection=False;";
+        optionsBuilder.UseSqlServer(connectionString);
 
-    //}
+    }
 
 }

@@ -99,10 +99,10 @@ namespace BlazorApp.Client.Pages.Identity
         private async Task InvokeModal()
         {
             var parameters = new DialogParameters();
-            var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true };
+            var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, BackdropClick = true };
             var dialog = _dialogService.Show<RegisterUserModal>(_localizer["Register New User"], parameters, options);
             var result = await dialog.Result;
-            if (!result.Cancelled)
+            if (!result.Canceled)
             {
                 await GetUsersAsync();
             }

@@ -1,8 +1,9 @@
-﻿using Blazored.LocalStorage;
-using BlazorApp.Client.Infrastructure.Authentication;
+﻿using BlazorApp.Client.Infrastructure.Authentication;
 using BlazorApp.Client.Infrastructure.Managers;
 using BlazorApp.Client.Infrastructure.Managers.Preferences;
+using BlazorApp.Shared.Constants.Application;
 using BlazorApp.Shared.Constants.Permission;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -15,12 +16,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
-using BlazorApp.Shared.Constants.Application;
 
 namespace BlazorApp.Client.Extensions;
 
 public static class WebAssemblyHostBuilderExtensions
-{     
+{
 
     public static WebAssemblyHostBuilder AddRootComponents(this WebAssemblyHostBuilder builder)
     {
@@ -50,19 +50,18 @@ public static class WebAssemblyHostBuilderExtensions
                 configuration.SnackbarConfiguration.VisibleStateDuration = 3000;
                 configuration.SnackbarConfiguration.ShowCloseIcon = false;
             })
-            .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
             .AddScoped<ClientPreferenceManager>()
             .AddScoped<BlazorAppStateProvider>()
             .AddScoped<AuthenticationStateProvider, BlazorAppStateProvider>()
-            .AddManagers()             
-            .AddTransient<AuthenticationHeaderHandler>()          
+            .AddManagers()
+            .AddTransient<AuthenticationHeaderHandler>()
             .AddScoped(sp => sp
                 .GetRequiredService<IHttpClientFactory>()
                 .CreateClient(ApplicationConstants.ClientApi.IdentityClient)
                 .EnableIntercept(sp))
             .AddScoped(sp => sp
                 .GetRequiredService<IHttpClientFactory>()
-                .CreateClient(ApplicationConstants.ClientApi.ApiGateway)); 
+                .CreateClient(ApplicationConstants.ClientApi.ApiGateway));
 
         builder.Services.AddHttpClient(ApplicationConstants.ClientApi.IdentityClient, client =>
         {
@@ -77,7 +76,7 @@ public static class WebAssemblyHostBuilderExtensions
             client.DefaultRequestHeaders.AcceptLanguage.ParseAdd(CultureInfo.DefaultThreadCurrentCulture?.TwoLetterISOLanguageName);
             client.BaseAddress = new Uri("https://localhost:7205/");
         });
-           
+
 
         builder.Services.AddHttpClientInterceptor();
         return builder;
@@ -108,7 +107,7 @@ public static class WebAssemblyHostBuilderExtensions
 
         return services;
     }
-    
+
 
     private static void RegisterPermissionClaims(AuthorizationOptions options)
     {

@@ -25,7 +25,6 @@
             </MudHidden>
         </MudToolBar>
         <div class="d-flex flex-column px-4" style="max-height:65vh;min-height:65vh; overflow:scroll;" id="chatContainer">
-          
         </div>
         <MudPaper Elevation="25" Class="d-flex flex-row px-2 mx-4" Style="">
             <MudTextField T="string" Placeholder="@_localizer["Enter your message..."]" @onkeypress="OnKeyPressInChat" DisableUnderLine="true" Class="mt-n2 mx-4"
@@ -40,8 +39,8 @@
                 <MudText Typo="Typo.h6">@_localizer["contacts"]</MudText>
             </MudToolBar>
             <div class="d-flex flex-column px-4" style="max-height:70vh;min-height:70vh; overflow:scroll;">
-                <MudList Clickable="true">
-               
+                <MudList T="string" Clickable="true">
+
                 </MudList>
             </div>
         </MudPaper>
@@ -49,8 +48,8 @@
 </div>
 <MudDrawer @bind-Open="@_open" Anchor="@ChatDrawer" Elevation="1" Variant="@DrawerVariant.Temporary">
     <div class="pa-3">
-        <MudList Clickable="true">
-           
+        <MudList T="string" Clickable="true">
+
         </MudList>
     </div>
 </MudDrawer>

@@ -65,7 +65,7 @@ namespace BlazorApp.Client.Shared
                         config.ShowTransitionDuration = 500;
                         config.Action = _localizer["Chat?"];
                         config.ActionColor = Color.Primary;
-                        config.Onclick = snackbar =>
+                        config.OnClick = snackbar =>
                         {
                             _navigationManager.NavigateTo($"chat/{senderUserId}");
                             return Task.CompletedTask;

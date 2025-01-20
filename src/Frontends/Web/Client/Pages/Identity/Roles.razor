@@ -52,24 +52,24 @@ else
             </MudTd>
             <MudTd DataLabel="@_localizer["Actions"]" Style="text-align: right">
                 @if (_canViewRoleClaims || _canEditRoles || _canDeleteRoles)
-                    {
-                    <MudMenu Label="@_localizer["Actions"]" Variant="Variant.Filled" DisableElevation="true" EndIcon="@Icons.Filled.KeyboardArrowDown" IconColor="Color.Secondary" Direction="Direction.Left" OffsetX="true">
+                {
+                    <MudMenu Label="@_localizer["Actions"]" Variant="Variant.Filled" DisableElevation="true" EndIcon="Icons.Material.Filled.KeyboardArrowDown" IconColor="Color.Secondary" Direction="Direction.Left" OffsetX="true">
                         @if (_canViewRoleClaims)
-                            {
+                        {
                             <MudMenuItem @onclick="@(() => ManagePermissions(@context.Id))">@_localizer["Manage Permission"]</MudMenuItem>
-                            }
+                        }
                         @if (_canEditRoles)
-                            {
+                        {
                             <MudMenuItem @onclick="@(() => InvokeModal(@context.Id))">@_localizer["Edit"]</MudMenuItem>
-                            }
+                        }
                         @if (_canDeleteRoles)
-                            {
+                        {
                             <MudMenuItem @onclick="@(() => Delete(@context.Id))">@_localizer["Delete"]</MudMenuItem>
-                            }
+                        }
                     </MudMenu>
-                    }
-                    else
-                    {
+                }
+                else
+                {
                     <MudButton Variant="Variant.Filled"
                                DisableElevation="true"
                                StartIcon="@Icons.Material.Filled.DoNotTouch"
@@ -78,13 +78,13 @@ else
                                Color="Color.Surface">
                         @_localizer["No Allowed Actions"]
                     </MudButton>
-                    }
+                }
             </MudTd>
         </RowTemplate>
         <FooterContent>
-            <MudSwitch @bind-Checked="@_dense" Color="Color.Secondary" Style="margin-left: 5px;">@_localizer["Dense"]</MudSwitch>
-            <MudSwitch @bind-Checked="@_striped" Color="Color.Tertiary" Style="margin-left: 5px;">@_localizer["Striped"]</MudSwitch>
-            <MudSwitch @bind-Checked="@_bordered" Color="Color.Warning" Style="margin-left: 5px;">@_localizer["Bordered"]</MudSwitch>
+            <MudSwitch T="bool" @bind-Checked="@_dense" Color="Color.Secondary" Style="margin-left: 5px;">@_localizer["Dense"]</MudSwitch>
+            <MudSwitch T="bool" @bind-Checked="@_striped" Color="Color.Tertiary" Style="margin-left: 5px;">@_localizer["Striped"]</MudSwitch>
+            <MudSwitch T="bool" @bind-Checked="@_bordered" Color="Color.Warning" Style="margin-left: 5px;">@_localizer["Bordered"]</MudSwitch>
         </FooterContent>
         <PagerContent>
             <TablePager />

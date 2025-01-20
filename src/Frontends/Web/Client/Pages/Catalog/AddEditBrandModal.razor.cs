@@ -15,7 +15,7 @@ namespace BlazorApp.Client.Pages.Catalog
         [Inject] private IBrandManager BrandManager { get; set; }
 
         [Parameter] public AddEditBrandCommand AddEditBrandModel { get; set; } = new();
-        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
         [CascadingParameter] private HubConnection HubConnection { get; set; }
 
         private FluentValidationValidator _fluentValidationValidator;
