@@ -7,7 +7,7 @@ using Operation.Shared.Wrapper;
 
 namespace Operation.Application.Features.Operation.Commands.AddOperation;
 
-public record AddOperationCommand(string Code,string Name) : IRequest<Result<int>>;
+public record AddOperationCommand(string Code, string Name) : IRequest<Result<int>>;
 
 public class AddOperationCommandHandler : IRequestHandler<AddOperationCommand, Result<int>>
 {
@@ -15,11 +15,11 @@ public class AddOperationCommandHandler : IRequestHandler<AddOperationCommand, R
     private readonly IMapper _mapper;
     private readonly IOperationService _operationService;
     public AddOperationCommandHandler(
-        IUnitOfWork<int> unitOfWork,  
+        IUnitOfWork<int> unitOfWork,
         IMapper mapper,
         IOperationService operationService)
     {
-        _unitOfWork = unitOfWork;     
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
         _operationService = operationService;
     }
@@ -29,13 +29,12 @@ public class AddOperationCommandHandler : IRequestHandler<AddOperationCommand, R
         var operation = _mapper.Map<Domain.Entities.Operation>(request);
         await _unitOfWork.Repository<Domain.Entities.Operation>().AddAsync(operation);
         await _unitOfWork.CommitAndRemoveCache(cancellationToken,
-                                     new string[]
-                                     {  ApplicationConstants.Cache.OPERATION_KEY ,
+                                     [  ApplicationConstants.Cache.OPERATION_KEY ,
                                         ApplicationConstants.Cache.OPERATIONATTRIBUTE_KEY,
                                         ApplicationConstants.Cache.OPERATIONWITHATTRIBUTE_KEY,
-                                     });
+                                     ]);
 
-        _operationService.SendInfoAddedOperation();
+        await _operationService.SendInfoAddedOperationAsync(cancellationToken);
         return await Result<int>.SuccessAsync(operation.Id);
     }
 

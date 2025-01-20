@@ -6,27 +6,36 @@ using System.Text;
 namespace Operation.Infrastructure.Services;
 
 public class OperationService : IOperationService
-{ 
+{
     private readonly IRabbitMqService _rabbitMqService;
 
     public OperationService(IRabbitMqService rabbitMqService)
-    {       
-        _rabbitMqService = rabbitMqService;
-    } 
-
-    public void SendInfoAddedOperation()
     {
-        using var connection = _rabbitMqService.CreateChannel();
-        using var channel = connection.CreateModel();
+        _rabbitMqService = rabbitMqService;
+    }
 
-        channel.ExchangeDeclare(exchange: ApplicationConstants.RabbitMq.EXCHANGE_OPERATION, type: ExchangeType.Fanout);
+    public async Task SendInfoAddedOperationAsync(CancellationToken cancellationToken)
+    {
+        using var channel = await _rabbitMqService.CreateChannelAsync(cancellationToken);
+
+
+        await channel.ExchangeDeclareAsync(
+            exchange: ApplicationConstants.RabbitMq.EXCHANGE_OPERATION,
+            type: ExchangeType.Fanout,
+            cancellationToken: cancellationToken);
 
         var body = Encoding.UTF8.GetBytes("refresh_operation");
 
-        channel.BasicPublish(exchange: ApplicationConstants.RabbitMq.EXCHANGE_OPERATION,
+        var props = new BasicProperties();
+
+        await channel.BasicPublishAsync(exchange: ApplicationConstants.RabbitMq.EXCHANGE_OPERATION,
                         routingKey: string.Empty,
-                        basicProperties: null,
-                        body: body);
+                        mandatory: false,
+                        basicProperties: props,
+                        body: body,
+                        cancellationToken);
+
+        await Task.CompletedTask;
     }
-   
+
 }

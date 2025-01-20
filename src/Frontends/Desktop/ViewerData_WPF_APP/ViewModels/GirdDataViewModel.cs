@@ -4,6 +4,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ViewerData_WPF_APP.Interfaces;
@@ -16,21 +17,21 @@ public partial class GirdDataViewModel : ObservableObject
 {
     private const string EXCHANGE_OPERATION = "EXCHANGE_OPERATION";
 
-    private readonly IOperationServices _operationServices;    
-    private readonly IModel _channel;
+    private readonly IOperationServices _operationServices;
+    private readonly IChannel _channel;
     public GirdDataViewModel(IOperationServices operationServices, IRabbitMqService rabbitMqService)
     {
         LoadedCommand = new AsyncRelayCommand(Loaded);
         UnloadedCommand = new AsyncRelayCommand(Unloaded);
-        _operationServices = operationServices; 
-        _channel = rabbitMqService.CreateChannel().CreateModel();
+        _operationServices = operationServices;
+        _channel = rabbitMqService.CreateChannelAsync(CancellationToken.None).GetAwaiter().GetResult();
     }
 
     public ICommand LoadedCommand { get; set; }
     public ICommand UnloadedCommand { get; set; }
 
     [ObservableProperty]
-    private ObservableCollection<Operation>? gridData; 
+    private ObservableCollection<Operation> gridData;
 
     private async Task Loaded()
     {
@@ -40,18 +41,18 @@ public partial class GirdDataViewModel : ObservableObject
     }
 
     private async Task SubscribeQueue()
-    { 
-        _channel.ExchangeDeclare(exchange: EXCHANGE_OPERATION, type: ExchangeType.Fanout);
+    {
+        await _channel.ExchangeDeclareAsync(exchange: EXCHANGE_OPERATION, type: ExchangeType.Fanout);
 
-        var queueName = _channel.QueueDeclare().QueueName;
-        _channel.QueueBind(queue: queueName,
+        var queueName = (await _channel.QueueDeclareAsync()).QueueName;
+        await _channel.QueueBindAsync(queue: queueName,
                           exchange: EXCHANGE_OPERATION,
                           routingKey: string.Empty);
 
         var consumer = new AsyncEventingBasicConsumer(_channel);
-        consumer.Received += DoJobFromQueue;
+        consumer.ReceivedAsync += DoJobFromQueue;
 
-        _channel.BasicConsume(queue: queueName,
+        await _channel.BasicConsumeAsync(queue: queueName,
                      autoAck: true,
                      consumer: consumer);
 
@@ -59,18 +60,18 @@ public partial class GirdDataViewModel : ObservableObject
     }
 
     private async Task DoJobFromQueue(object sender, BasicDeliverEventArgs @event)
-    {      
+    {
         var body = @event.Body.ToArray();
         var message = Encoding.UTF8.GetString(body);
         if (!string.IsNullOrEmpty(message) && message == "refresh_operation")
-            await LoadData();       
+            await LoadData();
     }
- 
+
 
     private async Task Unloaded()
     {
         if (_channel != null && _channel.IsOpen)
-            _channel.Close();
+            await _channel.CloseAsync();
 
         await Task.CompletedTask;
     }

@@ -49,7 +49,7 @@ public class AddOperationAttributCommaddHandler : IRequestHandler<AddOperationAt
                            item: item,
                            cancellationToken: cancellationToken);
 
-        _operationService.SendInfoAddedOperation();
+        await _operationService.SendInfoAddedOperationAsync(cancellationToken);
 
         return (Result)await Result.SuccessAsync();
     }

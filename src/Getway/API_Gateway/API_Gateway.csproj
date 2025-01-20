@@ -1,8 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -11,12 +10,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.12" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="MMLib.SwaggerForOcelot" Version="7.0.1" />
-    <PackageReference Include="Ocelot" Version="20.0.0" />
-    <PackageReference Include="Ocelot.Cache.CacheManager" Version="20.0.0" />
-    <PackageReference Include="Ocelot.Provider.Polly" Version="20.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
+    <PackageReference Include="MMLib.SwaggerForOcelot" Version="8.3.2" />
+    <PackageReference Include="Ocelot" Version="23.4.3" />
+    <PackageReference Include="Ocelot.Cache.CacheManager" Version="23.4.3" />
+    <PackageReference Include="Ocelot.Provider.Polly" Version="23.4.3" />
   </ItemGroup>
 
 </Project>
