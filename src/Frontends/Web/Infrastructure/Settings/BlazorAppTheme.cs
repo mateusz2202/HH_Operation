@@ -120,13 +120,6 @@ public class BlazorAppTheme
             DrawerText = "rgba(0,0,0, 0.7)",
             Success = "#007E33"
         },
-
-        Typography = DefaultTypography,
-        LayoutProperties = DefaultLayoutProperties
-    };
-
-    public static MudTheme DarkTheme = new MudTheme()
-    {
         PaletteDark = new PaletteDark()
         {
             Primary = "#1E88E5",
@@ -144,9 +137,21 @@ public class BlazorAppTheme
             ActionDefault = "#adadb1",
             ActionDisabled = "rgba(255,255,255, 0.26)",
             ActionDisabledBackground = "rgba(255,255,255, 0.12)",
-            DrawerIcon = "rgba(255,255,255, 0.50)"
+            DrawerIcon = "rgba(255,255,255, 0.50)",
+            GrayLight = "#2a2833",
+            GrayLighter = "#1e1e2d",
+            Info = "#4a86ff",
+            Warning = "#ffb545",
+            Error = "#ff3f5f",
+            LinesDefault = "#33323e",
+            TableLines = "#33323e",
+            Divider = "#292838",
+            OverlayLight = "#1e1e2d80",
         },
+
         Typography = DefaultTypography,
         LayoutProperties = DefaultLayoutProperties
     };
+
+
 }
