@@ -9,10 +9,10 @@ public class AddEditBrandCommandValidator : AbstractValidator<AddEditBrandComman
     public AddEditBrandCommandValidator(IStringLocalizer<AddEditBrandCommandValidator> localizer)
     {
         RuleFor(request => request.Name)
-            .Must(x => !string.IsNullOrWhiteSpace(x)).WithMessage(x => localizer["Name is required!"]);
+            .Must(x => !string.IsNullOrWhiteSpace(x)).WithMessage(localizer["Name is required!"]);
         RuleFor(request => request.Description)
-            .Must(x => !string.IsNullOrWhiteSpace(x)).WithMessage(x => localizer["Description is required!"]);
+            .Must(x => !string.IsNullOrWhiteSpace(x)).WithMessage(localizer["Description is required!"]);
         RuleFor(request => request.Tax)
-            .GreaterThan(0).WithMessage(x => localizer["Tax must be greater than 0"]);
+            .GreaterThan(0).WithMessage(localizer["Tax must be greater than 0"]);
     }
 }

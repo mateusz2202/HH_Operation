@@ -23,7 +23,8 @@ public class Startup
     {       
         app.UseExceptionHandling(env);
         app.UseHttpsRedirection();     
-        app.UseBlazorFrameworkFiles();    
+        app.UseBlazorFrameworkFiles();
+        app.UseStaticFiles();
         app.UseRequestLocalizationByCulture();
         app.UseRouting();
         app.UseAuthentication();

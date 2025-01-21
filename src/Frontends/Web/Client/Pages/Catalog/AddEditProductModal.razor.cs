@@ -1,6 +1,11 @@
-﻿using BlazorApp.Application.Requests;
+﻿using BlazorApp.Application.Features.Brands;
+using BlazorApp.Application.Features.Products;
+using BlazorApp.Application.Requests;
 using BlazorApp.Client.Extensions;
+using BlazorApp.Client.Infrastructure.Managers.Catalog.Brand;
+using BlazorApp.Client.Infrastructure.Managers.Catalog.Product;
 using BlazorApp.Shared.Constants.Application;
+using Blazored.FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -9,12 +14,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using Blazored.FluentValidation;
-using BlazorApp.Client.Infrastructure.Managers.Catalog.Brand;
-using BlazorApp.Client.Infrastructure.Managers.Catalog.Product;
-using BlazorApp.Application.Features.Products;
-using BlazorApp.Application.Features.Brands;
 
 namespace BlazorApp.Client.Pages.Catalog
 {
@@ -25,7 +26,7 @@ namespace BlazorApp.Client.Pages.Catalog
 
         [Parameter] public AddEditProductCommand AddEditProductModel { get; set; } = new();
         [CascadingParameter] private HubConnection HubConnection { get; set; }
-        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
 
         private FluentValidationValidator _fluentValidationValidator;
         private bool Validated => _fluentValidationValidator.Validate(options => { options.IncludeAllRuleSets(); });
@@ -115,7 +116,7 @@ namespace BlazorApp.Client.Pages.Catalog
             }
         }
 
-        private async Task<IEnumerable<int>> SearchBrands(string value)
+        private async Task<IEnumerable<int>> SearchBrands(string value, CancellationToken cancellationToken)
         {
             // In real life use an asynchronous function for fetching data from an api.
             await Task.Delay(5);

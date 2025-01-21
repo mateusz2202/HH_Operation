@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BlazorApp.Application.Features.Documents;
+using BlazorApp.Application.Features.DocumentTypes;
 using BlazorApp.Application.Requests;
+using BlazorApp.Client.Infrastructure.Managers.Misc.Document;
+using BlazorApp.Client.Infrastructure.Managers.Misc.DocumentType;
+using Blazored.FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using Blazored.FluentValidation;
-using BlazorApp.Client.Infrastructure.Managers.Misc.Document;
-using BlazorApp.Client.Infrastructure.Managers.Misc.DocumentType;
-using BlazorApp.Application.Features.Documents;
-using BlazorApp.Application.Features.DocumentTypes;
 
 namespace BlazorApp.Client.Pages.Misc
 {
@@ -21,7 +22,7 @@ namespace BlazorApp.Client.Pages.Misc
         [Inject] private IDocumentTypeManager DocumentTypeManager { get; set; }
 
         [Parameter] public AddEditDocumentCommand AddEditDocumentModel { get; set; } = new();
-        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
 
         private FluentValidationValidator _fluentValidationValidator;
         private bool Validated => _fluentValidationValidator.Validate(options => { options.IncludeAllRuleSets(); });
@@ -84,7 +85,7 @@ namespace BlazorApp.Client.Pages.Misc
             }
         }
 
-        private async Task<IEnumerable<int>> SearchDocumentTypes(string value)
+        private async Task<IEnumerable<int>> SearchDocumentTypes(string value, CancellationToken cancellationToken)
         {
             // In real life use an asynchronous function for fetching data from an api.
             await Task.Delay(5);

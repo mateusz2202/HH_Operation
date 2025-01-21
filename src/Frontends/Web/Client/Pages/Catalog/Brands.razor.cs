@@ -84,10 +84,10 @@ public partial class Brands
         {
             { nameof(Shared.Dialogs.DeleteConfirmation.ContentText), string.Format(deleteContent, id) }
         };
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, BackdropClick = true };
         var dialog = _dialogService.Show<Shared.Dialogs.DeleteConfirmation>(_localizer["Delete"], parameters, options);
         var result = await dialog.Result;
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             var response = await BrandManager.DeleteAsync(id);
             if (response.Succeeded)
@@ -148,10 +148,10 @@ public partial class Brands
                 });
             }
         }
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, BackdropClick = true };
         var dialog = _dialogService.Show<AddEditBrandModal>(id == 0 ? _localizer["Create"] : _localizer["Edit"], parameters, options);
         var result = await dialog.Result;
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             await Reset();
         }
@@ -177,11 +177,11 @@ public partial class Brands
             CloseButton = true,
             MaxWidth = MaxWidth.Small,
             FullWidth = true,
-            DisableBackdropClick = true
+            BackdropClick = true
         };
         var dialog = _dialogService.Show<ImportExcelModal>(_localizer["Import"], parameters, options);
         var result = await dialog.Result;
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             await Reset();
         }

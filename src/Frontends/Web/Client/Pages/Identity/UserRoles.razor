@@ -37,12 +37,12 @@ else
             <MudTd DataLabel="@_localizer["Description"]">
                 <MudHighlighter Text="@context.RoleDescription" HighlightedText="@_searchString" />
             </MudTd>
-            <MudTd DataLabel="Role"><MudCheckBox @bind-Checked="@context.Selected" Disabled="@(!_canEditUsers)" Color="Color.Secondary"></MudCheckBox></MudTd>
+            <MudTd DataLabel="Role"><MudCheckBox T="bool" @bind-Checked="@context.Selected" Disabled="@(!_canEditUsers)" Color="Color.Secondary"></MudCheckBox></MudTd>
         </RowTemplate>
         <FooterContent>
-            <MudSwitch @bind-Checked="@_dense" Color="Color.Secondary" Style="margin-left: 5px;">@_localizer["Dense"]</MudSwitch>
-            <MudSwitch @bind-Checked="@_striped" Color="Color.Tertiary" Style="margin-left: 5px;">@_localizer["Striped"]</MudSwitch>
-            <MudSwitch @bind-Checked="@_bordered" Color="Color.Warning" Style="margin-left: 5px;">@_localizer["Bordered"]</MudSwitch>
+            <MudSwitch T="bool" @bind-Checked="@_dense" Color="Color.Secondary" Style="margin-left: 5px;">@_localizer["Dense"]</MudSwitch>
+            <MudSwitch T="bool" @bind-Checked="@_striped" Color="Color.Tertiary" Style="margin-left: 5px;">@_localizer["Striped"]</MudSwitch>
+            <MudSwitch T="bool" @bind-Checked="@_bordered" Color="Color.Warning" Style="margin-left: 5px;">@_localizer["Bordered"]</MudSwitch>
         </FooterContent>
         <PagerContent>
             <TablePager />

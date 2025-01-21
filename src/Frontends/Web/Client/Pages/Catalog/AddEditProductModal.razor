@@ -64,7 +64,7 @@
                                        Variant="Variant.Text"
                                        Color="Color.Primary"
                                        Size="Size.Small"
-                                       StartIcon="@Icons.Filled.CloudUpload"
+                                       StartIcon="Icons.Material.Filled.CloudUpload"
                                        for="fileInput">
                                 @_localizer["Upload"]
                             </MudButton>
@@ -72,14 +72,14 @@
                             {
                                 <MudButton Variant="Variant.Text"
                                            Color="Color.Info"
-                                           StartIcon="@Icons.Filled.RemoveRedEye"
+                                           StartIcon="Icons.Material.Filled.RemoveRedEye"
                                            Size="Size.Small"
                                            Link="@(AddEditProductModel.ImageDataURL)" Target="_blank">
                                     @_localizer["View"]
                                 </MudButton>
                                 <MudButton Variant="Variant.Text"
                                            Color="Color.Error"
-                                           StartIcon="@Icons.Filled.Delete"
+                                           StartIcon="Icons.Material.Filled.Delete"
                                            Size="Size.Small"
                                            OnClick="DeleteAsync">
                                     @_localizer["Delete"]

@@ -14,6 +14,7 @@ using BlazorApp.Client.Infrastructure.Managers.Catalog.Product;
 using BlazorApp.Shared.Constants.Permission;
 using Microsoft.AspNetCore.Authorization;
 using BlazorApp.Application.Features.Products;
+using System.Threading;
 
 namespace BlazorApp.Client.Pages.Catalog;
 
@@ -57,7 +58,7 @@ public partial class Products
         }
     }
 
-    private async Task<TableData<GetAllPagedProductsResponse>> ServerReload(TableState state)
+    private async Task<TableData<GetAllPagedProductsResponse>> ServerReload(TableState state, CancellationToken cancellationToken)
     {
         if (!string.IsNullOrWhiteSpace(_searchString))
         {
@@ -72,7 +73,7 @@ public partial class Products
         string[] orderings = null;
         if (!string.IsNullOrEmpty(state.SortLabel))
         {
-            orderings = state.SortDirection != SortDirection.None ? new[] {$"{state.SortLabel} {state.SortDirection}"} : new[] {$"{state.SortLabel}"};
+            orderings = state.SortDirection != SortDirection.None ? new[] { $"{state.SortLabel} {state.SortDirection}" } : new[] { $"{state.SortLabel}" };
         }
 
         var request = new GetAllPagedProductsRequest { PageSize = pageSize, PageNumber = pageNumber + 1, SearchString = _searchString, Orderby = orderings };
@@ -141,10 +142,10 @@ public partial class Products
                 });
             }
         }
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true, DisableBackdropClick = true };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true, BackdropClick = true };
         var dialog = _dialogService.Show<AddEditProductModal>(id == 0 ? _localizer["Create"] : _localizer["Edit"], parameters, options);
         var result = await dialog.Result;
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             OnSearch("");
         }
@@ -157,10 +158,10 @@ public partial class Products
         {
             {nameof(Shared.Dialogs.DeleteConfirmation.ContentText), string.Format(deleteContent, id)}
         };
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, BackdropClick = true };
         var dialog = _dialogService.Show<Shared.Dialogs.DeleteConfirmation>(_localizer["Delete"], parameters, options);
         var result = await dialog.Result;
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             var response = await ProductManager.DeleteAsync(id);
             if (response.Succeeded)

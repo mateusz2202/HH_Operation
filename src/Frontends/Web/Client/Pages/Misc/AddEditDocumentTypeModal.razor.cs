@@ -15,7 +15,7 @@ namespace BlazorApp.Client.Pages.Misc
         [Inject] private IDocumentTypeManager DocumentTypeManager { get; set; }
 
         [Parameter] public AddEditDocumentTypeCommand AddEditDocumentTypeModel { get; set; } = new();
-        [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+        [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
         [CascadingParameter] private HubConnection HubConnection { get; set; }
 
         private FluentValidationValidator _fluentValidationValidator;

@@ -11,6 +11,7 @@ using BlazorApp.Shared.Constants.Permission;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using BlazorApp.Application.Features.Documents;
+using System.Threading;
 
 namespace BlazorApp.Client.Pages.Misc
 {
@@ -56,7 +57,7 @@ namespace BlazorApp.Client.Pages.Misc
             }
         }
 
-        private async Task<TableData<GetAllDocumentsResponse>> ServerReload(TableState state)
+        private async Task<TableData<GetAllDocumentsResponse>> ServerReload(TableState state, CancellationToken token)
         {
             if (!string.IsNullOrWhiteSpace(_searchString))
             {
@@ -148,8 +149,8 @@ namespace BlazorApp.Client.Pages.Misc
                     });
                 }
             }
-            var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true, DisableBackdropClick = true };
-            var dialog = _dialogService.Show<AddEditDocumentModal>(id == 0 ? _localizer["Create"] : _localizer["Edit"], parameters, options);
+            var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true, BackdropClick = true };
+            var dialog = await _dialogService.ShowAsync<AddEditDocumentModal>(id == 0 ? _localizer["Create"] : _localizer["Edit"], parameters, options);
             var result = await dialog.Result;
             if (!result.Canceled)
             {
@@ -164,8 +165,8 @@ namespace BlazorApp.Client.Pages.Misc
             {
                 {nameof(Shared.Dialogs.DeleteConfirmation.ContentText), string.Format(deleteContent, id)}
             };
-            var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true };
-            var dialog = _dialogService.Show<Shared.Dialogs.DeleteConfirmation>(_localizer["Delete"], parameters, options);
+            var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, BackdropClick = true };
+            var dialog = await _dialogService.ShowAsync<Shared.Dialogs.DeleteConfirmation>(_localizer["Delete"], parameters, options);
             var result = await dialog.Result;
             if (!result.Canceled)
             {

@@ -4,5 +4,5 @@ namespace Operation.Application.Contracts.Services;
 
 public interface IRabbitMqService
 {
-    IConnection CreateChannel();
+    Task<IChannel> CreateChannelAsync(CancellationToken cancellationToken);
 }

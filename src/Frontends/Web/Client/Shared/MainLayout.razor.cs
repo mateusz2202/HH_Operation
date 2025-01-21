@@ -7,7 +7,9 @@ namespace BlazorApp.Client.Shared
 {
     public partial class MainLayout : IDisposable
     {
-        private MudTheme _currentTheme;
+        private bool _isDarkMode = true;
+        private MudTheme? _theme = null;
+
         private bool _rightToLeft = false;
         private async Task RightToLeftToggle(bool value)
         {
@@ -17,19 +19,24 @@ namespace BlazorApp.Client.Shared
 
         protected override async Task OnInitializedAsync()
         {
-            _currentTheme = BlazorAppTheme.DefaultTheme;
-            _currentTheme = await _clientPreferenceManager.GetCurrentThemeAsync();
+            _theme = BlazorAppTheme.DefaultTheme;
+            _isDarkMode = await _clientPreferenceManager.ToggleDarkModeAsync();
             _rightToLeft = await _clientPreferenceManager.IsRTL();
             _interceptor.RegisterEvent();
         }
 
         private async Task DarkMode()
         {
-            bool isDarkMode = await _clientPreferenceManager.ToggleDarkModeAsync();
-            _currentTheme = isDarkMode
-                ? BlazorAppTheme.DefaultTheme
-                : BlazorAppTheme.DarkTheme;
+            _isDarkMode = await _clientPreferenceManager.ToggleDarkModeAsync();
+
+            await Task.CompletedTask;
         }
+
+        public string DarkLightModeButtonIcon => _isDarkMode switch
+        {
+            true => Icons.Material.Rounded.AutoMode,
+            false => Icons.Material.Outlined.DarkMode,
+        };
 
         public void Dispose()
         {

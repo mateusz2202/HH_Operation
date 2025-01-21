@@ -81,7 +81,7 @@ public class IndentityDbContext : IdentityDbContext<ApplicationUser, Application
             entity.ToTable("UserTokens");
         });
 
-    }   
+    }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {
@@ -111,8 +111,8 @@ public class IndentityDbContext : IdentityDbContext<ApplicationUser, Application
             await OnAfterSaveChanges(auditEntries, cancellationToken);
             return result;
         }
-    }   
-   
+    }
+
     private List<AuditEntry> OnBeforeSaveChanges(string userId)
     {
         ChangeTracker.DetectChanges();
@@ -198,11 +198,11 @@ public class IndentityDbContext : IdentityDbContext<ApplicationUser, Application
     }
 
 
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //{
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
 
-    //    string connectionString = "Server=localhost;Database=AA_IdentityDB;User ID=sa;Password=Xd1234!2;TrustServerCertificate=True;Trusted_Connection=False;";
-    //    optionsBuilder.UseSqlServer(connectionString);
+        string connectionString = "Server=DESKTOP-RQDKA5R\\HERMES;Database=AA_IdentityDB;User ID=sa;Password=997997;TrustServerCertificate=True;Trusted_Connection=False;";
+        optionsBuilder.UseSqlServer(connectionString);
 
-    //}
+    }
 }

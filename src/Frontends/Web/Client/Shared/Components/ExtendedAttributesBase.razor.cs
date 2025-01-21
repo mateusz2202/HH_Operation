@@ -21,7 +21,7 @@ public class ExtendedAttributesLocalization
     // for localization
 }
 
-public abstract partial class ExtendedAttributesBase<TId, TEntityId, TEntity, TExtendedAttribute>      
+public abstract partial class ExtendedAttributesBase<TId, TEntityId, TEntity, TExtendedAttribute>
 {
     [Inject] private IExtendedAttributeManager<TId, TEntityId, TEntity, TExtendedAttribute> ExtendedAttributeManager { get; set; }
 
@@ -200,10 +200,10 @@ public abstract partial class ExtendedAttributesBase<TId, TEntityId, TEntity, TE
                 Type = EntityExtendedAttributeType.Text
             });
         }
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true, DisableBackdropClick = true };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true, BackdropClick = true };
         var dialog = _dialogService.Show<AddEditExtendedAttributeModal<TId, TEntityId, TEntity, TExtendedAttribute>>(id.Equals(default) ? _localizer["Create"] : _localizer["Edit"], parameters, options);
         var result = await dialog.Result;
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             await Reset();
         }
@@ -216,15 +216,15 @@ public abstract partial class ExtendedAttributesBase<TId, TEntityId, TEntity, TE
         {
             {nameof(Dialogs.DeleteConfirmation.ContentText), string.Format(deleteContent, id)}
         };
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, DisableBackdropClick = true };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true, BackdropClick = true };
         var dialog = _dialogService.Show<Dialogs.DeleteConfirmation>(_localizer["Delete"], parameters, options);
         var result = await dialog.Result;
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             var response = await ExtendedAttributeManager.DeleteAsync(id);
             if (response.Succeeded)
             {
-                 await Reset();
+                await Reset();
                 _snackBar.Add(response.Messages[0], Severity.Success);
             }
             else

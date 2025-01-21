@@ -17,12 +17,12 @@ public class AddEditExtendedAttributeModalLocalization
     // for localization
 }
 
-public partial class AddEditExtendedAttributeModal<TId, TEntityId, TEntity, TExtendedAttribute>   
+public partial class AddEditExtendedAttributeModal<TId, TEntityId, TEntity, TExtendedAttribute>
 {
     [Inject] private IExtendedAttributeManager<TId, TEntityId, TEntity, TExtendedAttribute> ExtendedAttributeManager { get; set; }
 
     [CascadingParameter] private HubConnection HubConnection { get; set; }
-    [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+    [CascadingParameter] private IMudDialogInstance MudDialog { get; set; }
     [Parameter] public AddEditExtendedAttributeCommand<TId, TEntityId, TEntity, TExtendedAttribute> AddEditExtendedAttributeModel { get; set; } = new();
 
     private FluentValidationValidator _fluentValidationValidator;

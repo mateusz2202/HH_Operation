@@ -73,7 +73,7 @@ namespace BlazorApp.Client.Infrastructure.Managers.Preferences
             var preference = await GetPreference() as ClientPreference;
             if (preference != null)
             {
-                if (preference.IsDarkMode == true) return BlazorAppTheme.DarkTheme;
+                if (preference.IsDarkMode == true) return BlazorAppTheme.DefaultTheme;
             }
             return BlazorAppTheme.DefaultTheme;
         }

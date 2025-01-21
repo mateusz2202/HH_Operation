@@ -57,12 +57,12 @@ public class ProductDBContext : DbContext
         base.OnModelCreating(builder);
     }
 
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //{
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
 
-    //    string connectionString = "Server=localhost;Database=SS_ProductDB;User ID=sa;Password=Xd1234!2;TrustServerCertificate=True;Trusted_Connection=False;";
-    //    optionsBuilder.UseSqlServer(connectionString);
+        string connectionString = "Server=DESKTOP-RQDKA5R\\HERMES;Database=SS_ProductDB;User ID=sa;Password=997997;TrustServerCertificate=True;Trusted_Connection=False;";
+        optionsBuilder.UseSqlServer(connectionString);
 
-    //}
+    }
 
 }
